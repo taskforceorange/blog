@@ -1,6 +1,9 @@
 title: "Task Force Orange Blog"
-description: "Updates, changelogs en intel"
+description: "Updates, posts en meer"
+repository: taskforceorange/blog
+url: "https://taskforceorange.github.io"
+baseurl: "/blog"
+
 theme: minima
-markdown: kramdown
 plugins:
   - jekyll-feed
