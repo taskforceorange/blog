@@ -1,0 +1,6 @@
+title: "Task Force Orange Blog"
+description: "Updates, changelogs en intel"
+theme: minima
+markdown: kramdown
+plugins:
+  - jekyll-feed
