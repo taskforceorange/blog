@@ -8,6 +8,7 @@ layout: null
     "slug": "{{ post.slug }}",
     "date": "{{ post.date | date: "%Y-%m-%d" }}",
     "url": "{{ post.url | absolute_url }}",
+    "thumbnail": "{{ post.thumbnail }}",
     "excerpt": {{ post.excerpt | strip_html | jsonify }},
     "content": {{ post.content | strip_html | jsonify }}
   }{% unless forloop.last %},{% endunless %}
