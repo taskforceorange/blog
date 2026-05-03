@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  jekyll
+  jekyll-feed
+  minima
+
+BUNDLED WITH
+   2.4.10
