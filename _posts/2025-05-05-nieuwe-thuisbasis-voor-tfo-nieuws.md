@@ -17,4 +17,4 @@ Of je nu een veteraan bent of net binnenkomt: dit wordt jouw vaste punt om op de
 
 Welkom bij Oranje Krant — onze nieuwe missie om de community dichter bij elkaar te brengen.
 
-_De meest stabiele Anma Reforger server van Nederland._ 🟠⚔️
+_De meest stabiele Arma Reforger server van Nederland._ 🟠⚔️
