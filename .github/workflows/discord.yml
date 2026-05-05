@@ -13,21 +13,32 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Find latest post
+      - name: Detect added posts
+        id: changes
+        run: |
+          ADDED=$(git diff --name-status HEAD~1 HEAD | grep "^A" | awk '{print $2}')
+          echo "added=$ADDED" >> $GITHUB_OUTPUT
+
+      - name: Stop if no new posts
+        if: steps.changes.outputs.added == ''
+        run: echo "No new posts added. Skipping notification."
+
+      - name: Extract post info
+        if: steps.changes.outputs.added != ''
         id: post
         run: |
-          FILE=$(ls -t _posts | head -n 1)
-          TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' _posts/$FILE)
+          FILE=${{ steps.changes.outputs.added }}
+          TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' "$FILE")
           SLUG=$(basename "$FILE" .md | sed 's/^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}-//')
-          echo "file=$FILE" >> $GITHUB_OUTPUT
           echo "title=$TITLE" >> $GITHUB_OUTPUT
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
 
       - name: Send Discord Webhook
+        if: steps.changes.outputs.added != ''
         run: |
           curl -H "Content-Type: application/json" \
           -X POST \
           -d "{
-            \"content\": \"📢 Nieuwe blogpost gepubliceerd!\n**${{ steps.post.outputs.title }}**\nhttps://taskforceorange.nl/post.html?id=${{ steps.post.outputs.slug }}\"
+            \"content\": \"📢 Nieuwe blogpost gepubliceerd!\n**${{ steps.post.outputs.title }}**\nhttps://taskforceorange.nl/blog/post.html?id=${{ steps.post.outputs.slug }}\"
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
