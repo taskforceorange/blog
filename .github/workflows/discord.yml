@@ -15,21 +15,22 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Detect newly added post
-        id: detect
+      - name: Ensure sent log exists
         run: |
-          ADDED=$(git diff --name-status HEAD~1 HEAD | grep "^A" | grep "_posts/" | awk '{print $2}')
-          echo "added=$ADDED" >> $GITHUB_OUTPUT
+          if [ ! -f .sent_posts ]; then
+            touch .sent_posts
+          fi
 
-      - name: Stop if no new posts
-        if: ${{ steps.detect.outputs.added == '' }}
-        run: echo "No new posts added. Skipping."
+      - name: Detect newest post
+        id: postfile
+        run: |
+          FILE=$(ls -t _posts/*.md | head -n 1)
+          echo "file=$FILE" >> $GITHUB_OUTPUT
 
       - name: Extract post info
-        if: ${{ steps.detect.outputs.added != '' }}
         id: post
         run: |
-          FILE=${{ steps.detect.outputs.added }}
+          FILE=${{ steps.postfile.outputs.file }}
 
           TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' "$FILE")
           THUMB=$(sed -n 's/^thumbnail: "\(.*\)"/\1/p' "$FILE")
@@ -50,8 +51,21 @@ jobs:
           echo "thumb=$THUMB" >> $GITHUB_OUTPUT
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
 
-      - name: Send Discord Webhook (Embed + Button + Role Tag)
-        if: ${{ steps.detect.outputs.added != '' }}
+      - name: Skip if already sent
+        id: check
+        run: |
+          if grep -q "${{ steps.post.outputs.slug }}" .sent_posts; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Stop if already sent
+        if: ${{ steps.check.outputs.skip == 'true' }}
+        run: echo "Post already sent. Skipping."
+
+      - name: Send Discord Webhook
+        if: ${{ steps.check.outputs.skip == 'false' }}
         run: |
           curl -H "Content-Type: application/json" \
           -X POST \
@@ -77,3 +91,13 @@ jobs:
             }]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Mark post as sent
+        if: ${{ steps.check.outputs.skip == 'false' }}
+        run: |
+          echo "${{ steps.post.outputs.slug }}" >> .sent_posts
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .sent_posts
+          git commit -m "Mark post as sent"
+          git push
