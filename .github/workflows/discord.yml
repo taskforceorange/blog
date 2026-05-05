@@ -12,13 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo at the commit that triggered the Pages build
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Detect added posts
         id: changes
         run: |
-          ADDED=$(git diff --name-status HEAD~1 HEAD | grep "^A" | awk '{print $2}')
+          PARENT=$(git rev-parse ${{ github.event.workflow_run.head_sha }}^)
+          ADDED=$(git diff --name-status $PARENT ${{ github.event.workflow_run.head_sha }} | grep "^A" | awk '{print $2}')
           echo "added=$ADDED" >> $GITHUB_OUTPUT
 
       - name: Stop if no new posts
