@@ -39,11 +39,16 @@ jobs:
           # excerpt uit YAML
           EXCERPT=$(sed -n 's/^excerpt: "\(.*\)"/\1/p' "$FILE")
 
-          # als excerpt leeg is → automatisch genereren
+          # excerpt automatisch genereren als YAML leeg is
           if [ -z "$EXCERPT" ]; then
-            CONTENT=$(sed '1,/^---$/d' "$FILE")
+            CONTENT=$(sed '1,/^---$/d' "$FILE")     # alles na front-matter
+            CONTENT=$(echo "$CONTENT" | sed 's/^# //')  # verwijder markdown headers
+            CONTENT=$(echo "$CONTENT" | tr -d '\n')     # verwijder newlines
             EXCERPT=$(echo "$CONTENT" | sed 's/"/\\"/g' | cut -c1-200)
             EXCERPT="${EXCERPT}..."
+          else
+            EXCERPT=$(echo "$EXCERPT" | tr -d '\n')
+            EXCERPT=$(echo "$EXCERPT" | sed 's/"/\\"/g')
           fi
 
           echo "title=$TITLE" >> $GITHUB_OUTPUT
