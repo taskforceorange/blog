@@ -37,6 +37,7 @@ jobs:
 
           TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' "$FILE")
           THUMB=$(sed -n 's/^thumbnail: "\(.*\)"/\1/p' "$FILE")
+          PUBLISH=$(sed -n 's/^publish_to_discord: \(.*\)/\1/p' "$FILE")
           SLUG=$(basename "$FILE" .md | sed 's/^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}-//')
 
           # excerpt uit YAML
@@ -44,9 +45,9 @@ jobs:
 
           # excerpt automatisch genereren als YAML leeg is
           if [ -z "$EXCERPT" ]; then
-            CONTENT=$(sed '1,/^---$/d' "$FILE")     # alles na front-matter
-            CONTENT=$(echo "$CONTENT" | sed 's/^# //')  # verwijder markdown headers
-            CONTENT=$(echo "$CONTENT" | tr -d '\n')     # verwijder newlines
+            CONTENT=$(sed '1,/^---$/d' "$FILE")
+            CONTENT=$(echo "$CONTENT" | sed 's/^# //')
+            CONTENT=$(echo "$CONTENT" | tr -d '\n')
             EXCERPT=$(echo "$CONTENT" | sed 's/"/\\"/g' | cut -c1-200)
             EXCERPT="${EXCERPT}..."
           else
@@ -58,9 +59,15 @@ jobs:
           echo "excerpt=$EXCERPT" >> $GITHUB_OUTPUT
           echo "thumb=$THUMB" >> $GITHUB_OUTPUT
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
+          echo "publish=$PUBLISH" >> $GITHUB_OUTPUT
+
+      - name: Skip if publish_to_discord is not true
+        if: ${{ steps.post.outputs.publish != 'true' }}
+        run: echo "publish_to_discord is not true. Skipping."
 
       - name: Skip if already sent
         id: check
+        if: ${{ steps.post.outputs.publish == 'true' }}
         run: |
           if grep -q "${{ steps.post.outputs.slug }}" .sent_posts; then
             echo "skip=true" >> $GITHUB_OUTPUT
@@ -73,7 +80,7 @@ jobs:
         run: echo "Post already sent. Skipping."
 
       - name: Send Discord Webhook
-        if: ${{ steps.check.outputs.skip == 'false' }}
+        if: ${{ steps.check.outputs.skip == 'false' && steps.post.outputs.publish == 'true' }}
         run: |
           curl -H "Content-Type: application/json" \
           -X POST \
@@ -101,7 +108,7 @@ jobs:
           ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Mark post as sent
-        if: ${{ steps.check.outputs.skip == 'false' }}
+        if: ${{ steps.check.outputs.skip == 'false' && steps.post.outputs.publish == 'true' }}
         run: |
           echo "${{ steps.post.outputs.slug }}" >> .sent_posts
           git config user.name "GitHub Actions"
