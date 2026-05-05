@@ -2,11 +2,9 @@
 title: "Task Force Orange zoekt instructeurs"
 date: 2026-05-04
 slug: "tfo-zoekt-instructeurs"
-thumbnail: "/assets/thumbnails/20260426005200_1.jpg"
+thumbnail: "/assets/thumbnails/70AC2F4D-2D64-4D62-8605-805BACF67C15.png"
 publish_to_discord: false
 ---
-
-🎮🔥 **Task Force Orange zoekt Instructors** 🔥🎮
 
 Ben jij een ervaren speler in *Arma Reforger* en heb je het in je om anderen te trainen, begeleiden en naar een hoger niveau te tillen? Task Force Orange breidt uit en zoekt nieuwe instructeurs voor ons elite Instructor Team.
 
@@ -38,6 +36,4 @@ Ben jij een ervaren speler in *Arma Reforger* en heb je het in je om anderen te 
 🚨 **Klaar om leiding te nemen op het digitale slagveld?**
 Join Task Force Orange en maak impact als Instructor.
 
-📩 Interesse? Stuur een bericht of reageer hieronder voor meer info!
-
-**Task Force Orange – Train Hard. Fight Smart.**
+_De meest stabiele Arma Reforger server van Nederland._ 🟠⚔️
