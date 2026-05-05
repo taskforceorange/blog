@@ -3,7 +3,7 @@ title: "Onze nieuwe thuisbasis voor TFO‑nieuws"
 date: 2026-05-05
 slug: "nieuwe-thuisbasis-voor-tfo-nieuws"
 thumbnail: "/assets/thumbnails/20260426005200_1.jpg"
-publish_to_discord: true
+publish_to_discord: false
 ---
 
 Task Force Orange groeit. Elke dag sluiten nieuwe spelers zich aan, squads worden hechter en onze community leeft meer dan ooit. 
