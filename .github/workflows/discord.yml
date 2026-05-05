@@ -39,7 +39,7 @@ jobs:
 
       - name: Stop if no post needs publishing
         if: ${{ steps.findpost.outputs.found == 'false' }}
-        run: echo "No posts with publish_to_discord: true. Skipping."
+        run: echo "No posts with publish_to_discord true. Skipping."
 
       - name: Extract post info
         if: ${{ steps.findpost.outputs.found == 'true' }}
