@@ -6,6 +6,9 @@ on:
     types:
       - completed
 
+permissions:
+  contents: write
+
 jobs:
   notify:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -105,4 +108,4 @@ jobs:
           git config user.email "actions@github.com"
           git add .sent_posts
           git commit -m "Mark post as sent"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
