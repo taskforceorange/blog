@@ -1,8 +1,8 @@
 ---
-title: "Task Force Orange zoekt Instructors"
+title: "Task Force Orange zoekt instructeurs"
 date: 2026-05-05
-slug: "dikkebanaan"
-thumbnail: "/assets/thumbnails/Banner2.png"
+slug: "tfo-zoekt-instructeurs"
+thumbnail: "/assets/thumbnails/20260426005200_1.jpg"
 publish_to_discord: false
 ---
 
