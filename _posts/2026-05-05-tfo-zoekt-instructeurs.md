@@ -3,7 +3,7 @@ title: "Task Force Orange zoekt instructeurs"
 date: 2026-05-05
 slug: "tfo-zoekt-instructeurs"
 thumbnail: "/assets/thumbnails/70AC2F4D-2D64-4D62-8605-805BACF67C15.png"
-publish_to_discord: true
+publish_to_discord: false
 ---
 
 Ben jij een ervaren speler in *Arma Reforger* en heb je het in je om anderen te trainen, begeleiden en naar een hoger niveau te tillen? Task Force Orange breidt uit en zoekt nieuwe instructeurs voor ons elite Instructor Team.
