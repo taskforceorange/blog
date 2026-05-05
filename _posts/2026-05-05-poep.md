@@ -3,7 +3,7 @@ title: "Task Force Orange zoekt Instructors"
 date: 2026-05-05
 slug: "taskforceorange-zoekt-instructors"
 thumbnail: "/assets/thumbnails/Banner2.png"
-publish_to_discord: true
+publish_to_discord: false
 ---
 
 🎮🔥 **Task Force Orange zoekt Instructors** 🔥🎮
