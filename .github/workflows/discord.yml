@@ -18,38 +18,37 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Detect newest post
-        id: postfile
+      - name: Find post with publish_to_discord: true
+        id: findpost
         run: |
-          FILE=$(ls -t _posts/*.md | head -n 1)
-          echo "file=$FILE" >> $GITHUB_OUTPUT
+          TARGET=""
+          for FILE in _posts/*.md; do
+            FLAG=$(grep "^publish_to_discord: true" "$FILE" || true)
+            if [ ! -z "$FLAG" ]; then
+              TARGET="$FILE"
+              break
+            fi
+          done
 
-      - name: Check if newest post was newly added
-        id: added
-        run: |
-          FILE=${{ steps.postfile.outputs.file }}
-          BASENAME=$(basename "$FILE")
-          ADDED=$(git diff --name-status HEAD~1 HEAD | grep "^A" | grep "$BASENAME" || true)
-
-          if [ -z "$ADDED" ]; then
-            echo "new=false" >> $GITHUB_OUTPUT
+          if [ -z "$TARGET" ]; then
+            echo "found=false" >> $GITHUB_OUTPUT
           else
-            echo "new=true" >> $GITHUB_OUTPUT
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "file=$TARGET" >> $GITHUB_OUTPUT
           fi
 
-      - name: Stop if not newly added
-        if: ${{ steps.added.outputs.new == 'false' }}
-        run: echo "Post is not new. Skipping."
+      - name: Stop if no post needs publishing
+        if: ${{ steps.findpost.outputs.found == 'false' }}
+        run: echo "No posts with publish_to_discord: true. Skipping."
 
       - name: Extract post info
-        if: ${{ steps.added.outputs.new == 'true' }}
+        if: ${{ steps.findpost.outputs.found == 'true' }}
         id: post
         run: |
-          FILE=${{ steps.postfile.outputs.file }}
+          FILE=${{ steps.findpost.outputs.file }}
 
           TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' "$FILE")
           THUMB=$(sed -n 's/^thumbnail: "\(.*\)"/\1/p' "$FILE")
-          PUBLISH=$(sed -n 's/^publish_to_discord: \(.*\)/\1/p' "$FILE")
           SLUG=$(basename "$FILE" .md | sed 's/^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}-//')
 
           EXCERPT=$(sed -n 's/^excerpt: "\(.*\)"/\1/p' "$FILE")
@@ -69,14 +68,9 @@ jobs:
           echo "excerpt=$EXCERPT" >> $GITHUB_OUTPUT
           echo "thumb=$THUMB" >> $GITHUB_OUTPUT
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
-          echo "publish=$PUBLISH" >> $GITHUB_OUTPUT
-
-      - name: Stop if publish_to_discord is not true
-        if: ${{ steps.post.outputs.publish != 'true' }}
-        run: echo "publish_to_discord is not true. Skipping."
 
       - name: Send Discord Webhook
-        if: ${{ steps.post.outputs.publish == 'true' && steps.added.outputs.new == 'true' }}
+        if: ${{ steps.findpost.outputs.found == 'true' }}
         run: |
           curl -H "Content-Type: application/json" \
           -X POST \
@@ -102,3 +96,15 @@ jobs:
             }]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Disable publish_to_discord
+        if: ${{ steps.findpost.outputs.found == 'true' }}
+        run: |
+          FILE=${{ steps.findpost.outputs.file }}
+          sed -i 's/publish_to_discord: true/publish_to_discord: false/' "$FILE"
+
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add "$FILE"
+          git commit -m "Disable publish_to_discord for $FILE"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
