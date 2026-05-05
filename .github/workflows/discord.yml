@@ -18,13 +18,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Find post with publish_to_discord true
+      - name: "Find post with publish_to_discord: true"
         id: findpost
         run: |
           TARGET=""
           for FILE in _posts/*.md; do
-            FLAG=$(grep "^publish_to_discord: true" "$FILE" || true)
-            if [ ! -z "$FLAG" ]; then
+            if grep -q "^publish_to_discord: true" "$FILE"; then
               TARGET="$FILE"
               break
             fi
@@ -39,7 +38,8 @@ jobs:
 
       - name: Stop if no post needs publishing
         if: ${{ steps.findpost.outputs.found == 'false' }}
-        run: echo "No posts with publish_to_discord true. Skipping."
+        run: |
+          echo "No posts with publish_to_discord true. Skipping."
 
       - name: Extract post info
         if: ${{ steps.findpost.outputs.found == 'true' }}
@@ -54,14 +54,11 @@ jobs:
           EXCERPT=$(sed -n 's/^excerpt: "\(.*\)"/\1/p' "$FILE")
 
           if [ -z "$EXCERPT" ]; then
-            CONTENT=$(sed '1,/^---$/d' "$FILE")
-            CONTENT=$(echo "$CONTENT" | sed 's/^# //')
-            CONTENT=$(echo "$CONTENT" | tr -d '\n')
+            CONTENT=$(sed '1,/^---$/d' "$FILE" | sed 's/^# //' | tr -d '\n')
             EXCERPT=$(echo "$CONTENT" | sed 's/"/\\"/g' | cut -c1-200)
             EXCERPT="${EXCERPT}..."
           else
-            EXCERPT=$(echo "$EXCERPT" | tr -d '\n')
-            EXCERPT=$(echo "$EXCERPT" | sed 's/"/\\"/g')
+            EXCERPT=$(echo "$EXCERPT" | tr -d '\n' | sed 's/"/\\"/g')
           fi
 
           echo "title=$TITLE" >> $GITHUB_OUTPUT
@@ -78,21 +75,12 @@ jobs:
             \"content\": \"<@&1493593031218171944>\",
             \"embeds\": [{
               \"title\": \"${{ steps.post.outputs.title }}\",
-              \"description\": \"${{ steps.post.outputs.excerpt }}\",
+              \"description\": \"${{ steps.post.outputs.excerpt }}\n\n👉 [Klik hier om het volledige nieuwsbericht te lezen](https://taskforceorange.nl/post.html?id=${{ steps.post.outputs.slug }})\",
               \"url\": \"https://taskforceorange.nl/post.html?id=${{ steps.post.outputs.slug }}\",
               \"color\": 16744192,
               \"image\": {
                 \"url\": \"https://taskforceorange.github.io/blog${{ steps.post.outputs.thumb }}\"
               }
-            }],
-            \"components\": [{
-              \"type\": 1,
-              \"components\": [{
-                \"type\": 2,
-                \"style\": 5,
-                \"label\": \"Lees het volledige nieuwsbericht\",
-                \"url\": \"https://taskforceorange.nl/post.html?id=${{ steps.post.outputs.slug }}\"
-              }]
             }]
           }" \
           ${{ secrets.DISCORD_WEBHOOK }}
