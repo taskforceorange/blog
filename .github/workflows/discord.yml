@@ -75,7 +75,7 @@ jobs:
             \"content\": \"<@&1493593031218171944>\",
             \"embeds\": [{
               \"title\": \"${{ steps.post.outputs.title }}\",
-              \"description\": \"${{ steps.post.outputs.excerpt }}\n\n👉 [Klik hier om het volledige nieuwsbericht te lezen](https://taskforceorange.nl/post.html?id=${{ steps.post.outputs.slug }})\",
+              \"description\": \"${{ steps.post.outputs.excerpt }}\n\n👉 [Klik hier om het volledige nieuwsbericht te lezen](https://taskforceorange.nl/post/${{ steps.post.outputs.slug }})\",
               \"url\": \"https://taskforceorange.nl/post/${{ steps.post.outputs.slug }}\",
               \"color\": 16744192,
               \"image\": {
