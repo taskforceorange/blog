@@ -15,44 +15,53 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Detect newest post
-        id: postfile
+      - name: Detect newly added post
+        id: detect
         run: |
-          FILE=$(ls -t _posts/*.md | head -n 1)
-          echo "file=$FILE" >> $GITHUB_OUTPUT
+          ADDED=$(git diff --name-status HEAD~1 HEAD | grep "^A" | grep "_posts/" | awk '{print $2}')
+          echo "added=$ADDED" >> $GITHUB_OUTPUT
+
+      - name: Stop if no new posts
+        if: ${{ steps.detect.outputs.added == '' }}
+        run: echo "No new posts added. Skipping."
 
       - name: Extract post info
+        if: ${{ steps.detect.outputs.added != '' }}
         id: post
         run: |
-          FILE=${{ steps.postfile.outputs.file }}
+          FILE=${{ steps.detect.outputs.added }}
 
           TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' "$FILE")
-          EXCERPT=$(sed -n 's/^excerpt: "\(.*\)"/\1/p' "$FILE")
           THUMB=$(sed -n 's/^thumbnail: "\(.*\)"/\1/p' "$FILE")
           SLUG=$(basename "$FILE" .md | sed 's/^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}-//')
 
-          # excerpt inkorten tot 200 chars
-          EXCERPT_SHORT=$(echo "$EXCERPT" | sed 's/"/\\"/g' | cut -c1-200)
-          EXCERPT_SHORT="${EXCERPT_SHORT}..."
+          # excerpt uit YAML
+          EXCERPT=$(sed -n 's/^excerpt: "\(.*\)"/\1/p' "$FILE")
+
+          # als excerpt leeg is → automatisch genereren
+          if [ -z "$EXCERPT" ]; then
+            CONTENT=$(sed '1,/^---$/d' "$FILE")
+            EXCERPT=$(echo "$CONTENT" | sed 's/"/\\"/g' | cut -c1-200)
+            EXCERPT="${EXCERPT}..."
+          fi
 
           echo "title=$TITLE" >> $GITHUB_OUTPUT
-          echo "excerpt=$EXCERPT_SHORT" >> $GITHUB_OUTPUT
+          echo "excerpt=$EXCERPT" >> $GITHUB_OUTPUT
           echo "thumb=$THUMB" >> $GITHUB_OUTPUT
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
 
-      - name: Send Discord Webhook (Embed + Button)
+      - name: Send Discord Webhook (Embed + Button + Role Tag)
+        if: ${{ steps.detect.outputs.added != '' }}
         run: |
           curl -H "Content-Type: application/json" \
           -X POST \
           -d "{
+            \"content\": \"<@&1493593031218171944>\",
             \"embeds\": [{
               \"title\": \"${{ steps.post.outputs.title }}\",
               \"description\": \"${{ steps.post.outputs.excerpt }}\",
               \"url\": \"https://taskforceorange.nl/post.html?id=${{ steps.post.outputs.slug }}\",
               \"color\": 16744192,
-              \"thumbnail\": {
-                \"url\": \"https://taskforceorange.github.io/blog${{ steps.post.outputs.thumb }}\"
-              },
               \"image\": {
                 \"url\": \"https://taskforceorange.github.io/blog${{ steps.post.outputs.thumb }}\"
               }
