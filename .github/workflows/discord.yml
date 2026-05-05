@@ -18,7 +18,7 @@ jobs:
       - name: Detect newest post
         id: postfile
         run: |
-          FILE=$(ls -t blog/_posts/*.md | head -n 1)
+          FILE=$(ls -t ../_posts/*.md | head -n 1)
           echo "file=$FILE" >> $GITHUB_OUTPUT
 
       - name: Extract post info
