@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: - name: Find post with publish_to_discord true
+      - name: Find post with publish_to_discord true
         id: findpost
         run: |
           TARGET=""
