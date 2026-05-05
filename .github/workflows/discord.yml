@@ -12,27 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo at the commit that triggered the Pages build
+      - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Detect added posts
-        id: changes
+      - name: Detect newest post
+        id: postfile
         run: |
-          PARENT=$(git rev-parse ${{ github.event.workflow_run.head_sha }}^)
-          ADDED=$(git diff --name-status $PARENT ${{ github.event.workflow_run.head_sha }} | grep "^A" | awk '{print $2}')
-          echo "added=$ADDED" >> $GITHUB_OUTPUT
-
-      - name: Stop if no new posts
-        if: steps.changes.outputs.added == ''
-        run: echo "No new posts added. Skipping notification."
+          FILE=$(ls -t blog/_posts/*.md | head -n 1)
+          echo "file=$FILE" >> $GITHUB_OUTPUT
 
       - name: Extract post info
-        if: steps.changes.outputs.added != ''
         id: post
         run: |
-          FILE=${{ steps.changes.outputs.added }}
+          FILE=${{ steps.postfile.outputs.file }}
           TITLE=$(sed -n 's/^title: "\(.*\)"/\1/p' "$FILE")
           EXCERPT=$(sed -n 's/^excerpt: "\(.*\)"/\1/p' "$FILE")
           THUMB=$(sed -n 's/^thumbnail: "\(.*\)"/\1/p' "$FILE")
@@ -44,7 +36,6 @@ jobs:
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
 
       - name: Send Discord Webhook (Embed)
-        if: steps.changes.outputs.added != ''
         run: |
           curl -H "Content-Type: application/json" \
           -X POST \
