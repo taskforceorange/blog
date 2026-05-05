@@ -1,6 +1,6 @@
 ---
 title: "Task Force Orange zoekt instructeurs"
-date: 2026-05-04
+date: 2026-05-05
 slug: "tfo-zoekt-instructeurs"
 thumbnail: "/assets/thumbnails/70AC2F4D-2D64-4D62-8605-805BACF67C15.png"
 publish_to_discord: false
