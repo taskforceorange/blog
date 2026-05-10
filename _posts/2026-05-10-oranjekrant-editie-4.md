@@ -3,7 +3,7 @@ title: "Oranje Krant #4"
 date: 2026-05-10
 slug: "oranjekrant-editie-4"
 thumbnail: "/assets/thumbnails/IMG_2726.jpg"
-publish_to_discord: true
+publish_to_discord: false
 ---
 
 🧡 Oranje Krant – Editie 4 🧡
