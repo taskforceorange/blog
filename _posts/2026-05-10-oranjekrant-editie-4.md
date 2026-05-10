@@ -43,7 +43,7 @@ Zorg dat je zondag paraat staat en klaar bent om te trainen. 🫡
 
 Nog geen lid, of wil je vrienden uitnodigen?  
 Iedereen is welkom om deel te worden van onze groeiende community. 🌐  
-👉 **discord.taskforceorange.nl**
+👉 **[discord.taskforceorange.nl](https://discord.taskforceorange.nl)**
 
 Samen maken we Task Force Orange sterker.  
 Samen bouwen we aan iets groots. 🧡🔥
