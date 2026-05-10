@@ -6,50 +6,44 @@ thumbnail: "/assets/thumbnails/BCO.bbc25b26-73e6-48cb-9c3b-355abd849a50.png"
 publish_to_discord: false
 ---
 
-Afgelopen maandag 4 mei stonden we samen stil bij de Dodenherdenking. 🕯️
-Het was bijzonder om te zien hoeveel respect, rust en betrokkenheid er binnen onze community aanwezig was. Samen hebben we een moment genomen om te herdenken en stil te staan bij hen die hun leven hebben gegeven voor onze vrijheid. Dank aan iedereen die hierbij aanwezig was — ***Opdat wij niet vergeten*** ❤️
+Afgelopen maandag 4 mei stonden we samen stil bij de **Dodenherdenking**. 🕯️  
+Het was indrukwekkend om te zien hoe onze community zich verzamelde in stilte en respect. In dat moment voelde je de verbondenheid — niet alleen met elkaar, maar ook met de mensen die hun leven gaven voor onze vrijheid. Een klein gebaar, een groot gevoel van dankbaarheid. ❤️  
+**Opdat wij niet vergeten.**
 
-🚀 De community groeit sneller dan ooit!
+## 🚀 **Een community in beweging**
 
-Task Force Orange blijft groeien en dat is dankzij jullie!
+Wat begon als een idee, groeit nu uit tot iets groots.  
+Elke dag sluiten nieuwe spelers zich aan, ontstaan gesprekken in de chat en worden missies samen gespeeld. De energie binnen **Task Force Orange** is voelbaar — we bouwen niet zomaar een server, maar een hechte groep. 🔥  
 
-Met elke nieuwe speler, elk gesprek in de chat en iedere activiteit wordt onze community sterker, gezelliger en actiever. 🔥
+We naderen de magische grens van **200 leden**, en dat is meer dan een getal.  
+Het is het bewijs dat onze visie werkt: samen spelen, leren en groeien. 💪🧡
 
-We naderen inmiddels bijna de gigantische mijlpaal van 200 leden… en dat is geweldig om te zien. 💪🧡
+## 🎯 **Binnenkort: Capture the VIP**
 
-Van een idee naar een groeiende community vol enthousiaste leden — samen bouwen we iets bijzonders op.
+Er hangt spanning in de lucht… 👀  
+Binnenkort lanceren we een nieuw event dat teamwork en tactiek op de proef stelt: **Capture the VIP**.  
+Bereid je voor op een missie vol actie, strategie en adrenaline.  
+Meer details volgen snel — dus houd de server goed in de gaten en zorg dat je klaarstaat wanneer het startschot klinkt. 👊
 
-🎯 Binnenkort: Capture the VIP
+## 🪖 **Eerste officiële TFOIC‑training**
 
-Er komt een gloednieuw event aan waar je absoluut bij wilt zijn… 👀
+Zondag 15:00 uur is het zover: onze allereerste **TFOIC‑training**! 🎉  
+Een mijlpaal voor Task Force Orange, want hiermee zetten we de stap naar gestructureerde opleiding en groei binnen de community.
 
-🔥 Capture the VIP 🔥
+Tijdens deze training focussen we op:
 
-Spanning, teamwork en pure actie staan centraal tijdens dit event. Meer informatie volgt binnenkort, dus houd de server goed in de gaten en zorg dat je klaarstaat wanneer het begint. 👊
+- **Basic vaardigheden**
+- **Medic training**
+- **Samenwerking & communicatie**
 
-🚑 Eerste officiële TFOIC-training!
-En we hebben nóg iets groots om aan te kondigen…
+Of je nu net begint of al een veteraan bent — dit is jouw kans om te leren, te groeien en sterker te worden als team. 💥  
+Zorg dat je zondag paraat staat en klaar bent om te trainen. 🫡
 
-📅 Aankomende zondag – 15:00 uur
+## 🧡 **Word onderdeel van Task Force Orange**
 
-Onze allereerste TFOIC-training gaat van start! 🎉 Deze training staat volledig in het teken van:
+Nog geen lid, of wil je vrienden uitnodigen?  
+Iedereen is welkom om deel te worden van onze groeiende community. 🌐  
+👉 **discord.taskforceorange.nl**
 
-🪖 Basic vaardigheden
-
-🚑 Medic training
-
-🤝 Samenwerking & communicatie
-
-Of je nu nieuw bent of al ervaring hebt — iedereen kan meedoen en leren. Dit is dé kans om jezelf verder te ontwikkelen binnen Task Force Orange en sterker als team te worden. 💥
-
-➡️ Zorg dat je zondag om 15:00 uur aanwezig bent en voorbereid klaarstaat!
-
-🧡 Word onderdeel van Task Force Orange
-
-Ben je nog geen lid of wil je vrienden uitnodigen?
-Iedereen is welkom om onderdeel te worden van onze groeiende community!
-
-🌐 discord.taskforceorange.nl
-
-Samen maken we Task Force Orange sterker.
+Samen maken we Task Force Orange sterker.  
 Samen bouwen we aan iets groots. 🧡🔥
